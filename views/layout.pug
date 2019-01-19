@@ -1,0 +1,29 @@
+doctype html
+html
+  head
+    title Wallet Photos
+    link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tachyons/4.11.1/tachyons.min.css")
+
+  body
+    nav
+      ul
+        if user
+          li
+            =`Hello, ${user.name}`
+          li
+            a(href="/auth/logout") Logout
+          if user.contrib == true
+            li
+              a(href="/upload") Upload
+          if user.approved == true            
+            li
+              a(href="/photos") Photos
+          if user.admin == true
+            li
+              a(href="/admin") Admin
+
+    .container
+      include includes/alerts.pug
+      block content
+
+      

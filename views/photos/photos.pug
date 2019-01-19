@@ -1,0 +1,22 @@
+extends ../layout.pug
+block content
+  each photo in photos
+    article
+      img(src=photo.smUrl, srcset=`${photo.smUrl} 512w, ${photo.mdUrl} 1024w, ${photo.lgUrl} 2048w`, sizes="(max-width:500px) 100vw, (max-width:1000px) 100vw,")
+      ul
+        each comment in photo.comments
+          li= comment.comment
+      if photo.hearts > 0
+        =photo.hearts 
+        <3
+      unless photo.hideHeartButton == 'true'
+        form(action="/heart" method="POST")
+          input(type="hidden", name="userId" value=user.id)
+          input(type="hidden", name="photoId" value=photo.id)
+          input(type="submit" value="<3")
+      form(action="/comment" method="POST")
+        input(type="hidden", name="userId" value=user.id)
+        input(type="hidden", name="photoId" value=photo.id)
+        textarea(name="comment", cols="30", rows="4")
+        input(type="submit", value="Comment")
+    hr
